@@ -465,12 +465,14 @@ service charger /charger
     class charger
 
 # virtual sdcard daemon running as media_rw (1023)
-service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
+service sdcard /res/busybox mount -t sdcardfs -o rw,nosuid,nodev,noatime,nodiratime,uid=1023,gid=1023,wgid=1015,derive=legacy,reserved_mb=20 /data/media /mnt/shell/emulated
     class late_start
+    oneshot
 
 # USB-OTG storage daemon
-service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbdisk /storage/usbdisk
+service fuse_usbdisk /res/busybox mount -t sdcardfs -o rw,nosuid,nodev,noatime,nodiratime,uid=1023,gid=1023,wgid=1015,derive=unified,lower_fs=fat /mnt/media_rw/usbdisk /storage/usbdisk
     class late_start
+    oneshot
     disabled
 
 service thermald /system/bin/thermald
