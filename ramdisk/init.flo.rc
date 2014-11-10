@@ -284,8 +284,6 @@ on post-fs-data
     write /dev/cpuctl/apps/cpu.notify_on_migrate 1
 
     write /sys/module/intelli_plug/parameters/intelli_plug_active 1
-    write /sys/module/msm_thermal/parameters/enabled 1
-    write /sys/module/msm_thermal/core_control/enabled 1
 
 on charger
     # Enable Power modes and set the CPU Freq Sampling rates
@@ -474,6 +472,9 @@ service fuse_usbdisk /res/busybox mount -t sdcardfs -o rw,nosuid,nodev,noatime,n
     class late_start
     oneshot
     disabled
+
+service thermald /system/bin/thermald
+    class main
 
 service ppd /system/bin/mm-pp-daemon
     class late_start
