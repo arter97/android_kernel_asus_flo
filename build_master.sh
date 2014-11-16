@@ -1,21 +1,32 @@
 #!/bin/bash
 if [ ! "${1}" = "skip" ] ; then
 	./build_clean.sh
-	./build_kernel.sh CC='$(CROSS_COMPILE)gcc' "$@"
+	./build_kernel.sh aosp CC='$(CROSS_COMPILE)gcc' "$@"
+	./build_clean.sh noimg
+	./build_kernel.sh cm CC='$(CROSS_COMPILE)gcc' "$@"
 	./build_clean.sh noimg
 	./build_recovery.sh CC='$(CROSS_COMPILE)gcc' "$@"
 fi
 
 cp recovery.img recoveryzip/
 
-rm arter97-kernel-"$(cat version)".zip 2>/dev/null
-cp boot.img kernelzip/
+rm arter97-kernel-aosp-"$(cat version)".zip 2>/dev/null
+cp aosp.img kernelzip/
 cd kernelzip/
-7z a -mx9 arter97-kernel-"$(cat ../version)"-tmp.zip *
-zipalign -v 4 arter97-kernel-"$(cat ../version)"-tmp.zip ../arter97-kernel-"$(cat ../version)".zip
-rm arter97-kernel-"$(cat ../version)"-tmp.zip
+7z a -mx9 arter97-kernel-aosp-"$(cat ../version)"-tmp.zip *
+zipalign -v 4 arter97-kernel-aosp-"$(cat ../version)"-tmp.zip ../arter97-kernel-aosp-"$(cat ../version)".zip
+rm arter97-kernel-aosp-"$(cat ../version)"-tmp.zip
 cd ..
-ls -al arter97-kernel-"$(cat version)".zip
+ls -al arter97-kernel-aosp-"$(cat version)".zip
+
+rm arter97-kernel-cm-"$(cat version)".zip 2>/dev/null
+cp cm.img kernelzip/
+cd kernelzip/
+7z a -mx9 arter97-kernel-cm-"$(cat ../version)"-tmp.zip *
+zipalign -v 4 arter97-kernel-cm-"$(cat ../version)"-tmp.zip ../arter97-kernel-cm-"$(cat ../version)".zip
+rm arter97-kernel-cm-"$(cat ../version)"-tmp.zip
+cd ..
+ls -al arter97-kernel-cm-"$(cat version)".zip
 
 rm arter97-recovery-"$(cat version)"-philz_touch_"$(cat version_recovery | awk '{print $1}')".zip
 cd recoveryzip/
