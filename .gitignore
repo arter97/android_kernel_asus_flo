@@ -48,6 +48,8 @@ modules.builtin
 /*.zip
 /kernelzip/*.img
 !/kernelzip_aosp/system/lib/hw/*.so
+!/kernelzip_cm/system/lib/*.so
+!/kernelzip_cm/system/lib/hw/*.so
 /recoveryzip/*.img
 
 #

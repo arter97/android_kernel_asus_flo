@@ -7,6 +7,20 @@ run_program("/sbin/mount", "/data");
 ui_print(" - flashing boot.img");
 package_extract_file("boot.img","/dev/block/platform/msm_sdcc.1/by-name/boot");
 
+ui_print(" - installing stock graphics libraries");
+package_extract_dir("system", "/system");
+set_perm(0, 0, 0755, "/system/addon.d/97-kernel.sh");
+set_perm(0, 0, 0644, "/system/lib/hw/gralloc.default.so");
+set_perm(0, 0, 0644, "/system/lib/hw/gralloc.msm8960.so");
+set_perm(0, 0, 0644, "/system/lib/hw/hwcomposer.msm8960.so");
+set_perm(0, 0, 0644, "/system/lib/hw/memtrack.msm8960.so");
+set_perm(0, 0, 0644, "/system/lib/libexternal.so");
+set_perm(0, 0, 0644, "/system/lib/libmemalloc.so");
+set_perm(0, 0, 0644, "/system/lib/libmemtrack.so");
+set_perm(0, 0, 0644, "/system/lib/liboverlay.so");
+set_perm(0, 0, 0644, "/system/lib/libqdutils.so");
+set_perm(0, 0, 0644, "/system/lib/libqservice.so");
+
 ui_print(" - tuning file systems");
 run_program("/sbin/fstrim", "-v", "/system");
 run_program("/sbin/fstrim", "-v", "/data");
