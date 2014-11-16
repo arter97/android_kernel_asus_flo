@@ -11,8 +11,8 @@ fi
 cp recovery.img recoveryzip/
 
 rm arter97-kernel-aosp-"$(cat version)".zip 2>/dev/null
-cp aosp.img kernelzip/
-cd kernelzip/
+cp aosp.img kernelzip_aosp/
+cd kernelzip_aosp/
 7z a -mx9 arter97-kernel-aosp-"$(cat ../version)"-tmp.zip *
 zipalign -v 4 arter97-kernel-aosp-"$(cat ../version)"-tmp.zip ../arter97-kernel-aosp-"$(cat ../version)".zip
 rm arter97-kernel-aosp-"$(cat ../version)"-tmp.zip
@@ -20,8 +20,8 @@ cd ..
 ls -al arter97-kernel-aosp-"$(cat version)".zip
 
 rm arter97-kernel-cm-"$(cat version)".zip 2>/dev/null
-cp cm.img kernelzip/
-cd kernelzip/
+cp cm.img kernelzip_cm/
+cd kernelzip_cm/
 7z a -mx9 arter97-kernel-cm-"$(cat ../version)"-tmp.zip *
 zipalign -v 4 arter97-kernel-cm-"$(cat ../version)"-tmp.zip ../arter97-kernel-cm-"$(cat ../version)".zip
 rm arter97-kernel-cm-"$(cat ../version)"-tmp.zip

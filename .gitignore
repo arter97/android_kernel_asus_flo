@@ -47,6 +47,7 @@ modules.builtin
 /*.img
 /*.zip
 /kernelzip/*.img
+!/kernelzip_aosp/system/lib/hw/*.so
 /recoveryzip/*.img
 
 #
