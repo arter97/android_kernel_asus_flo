@@ -152,7 +152,7 @@ cd $KERNELDIR
 
 echo "Making new boot image"
 gcc -w -s -pipe -O2 -Itools/libmincrypt -o tools/mkbootimg/mkbootimg tools/libmincrypt/*.c tools/mkbootimg/mkbootimg.c
-tools/mkbootimg/mkbootimg --kernel $KERNELDIR/arch/arm/boot/zImage --ramdisk $RAMFS_TMP.cpio.lzo --cmdline 'console=ttyHSL0,115200,n8 androidboot.hardware=flo user_debug=31 msm_rtb.filter=0x3F ehci-hcd.park=3 enforcing=0' --base 0x80200000 --pagesize 2048 --ramdisk_offset 0x02000000 --tags_offset 0x00000100 --second_offset 0x00f00000 -o $KERNELDIR/recovery.img
+tools/mkbootimg/mkbootimg --kernel $KERNELDIR/arch/arm/boot/zImage --ramdisk $RAMFS_TMP.cpio.lzo --cmdline 'console=ttyHSL0,115200,n8 androidboot.hardware=flo user_debug=31 msm_rtb.filter=0x3F ehci-hcd.park=3 vmalloc=340M enforcing=0' --base 0x80200000 --pagesize 2048 --ramdisk_offset 0x02000000 --tags_offset 0x00000100 --second_offset 0x00f00000 -o $KERNELDIR/recovery.img
 if echo "$@" | grep -q "CC=\$(CROSS_COMPILE)gcc" ; then
 	dd if=/dev/zero bs=$((10485760-$(stat -c %s recovery.img))) count=1 >> recovery.img
 fi
