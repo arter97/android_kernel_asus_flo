@@ -2,8 +2,7 @@
 if [ ! "${1}" = "skip" ] ; then
 	./build_clean.sh
 	./build_kernel.sh aosp CC='$(CROSS_COMPILE)gcc' "$@"
-	./build_clean.sh noimg
-	./build_kernel.sh cm CC='$(CROSS_COMPILE)gcc' "$@"
+	./build_kernel.sh cm skip CC='$(CROSS_COMPILE)gcc'
 	./build_clean.sh noimg
 	./build_recovery.sh CC='$(CROSS_COMPILE)gcc' "$@"
 fi
