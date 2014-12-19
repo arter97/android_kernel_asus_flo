@@ -3,14 +3,14 @@
 export PATH=/res/asset:$PATH
 export ext4=1
 
-mount -t ext4 -o ro,noatime,nodiratime,data=ordered,barrier=0,discard /dev/block/platform/msm_sdcc.1/by-name/system /system
-mount -t f2fs -o ro,noatime,nodiratime,discard /dev/block/platform/msm_sdcc.1/by-name/system /system
+mount -t ext4 -o ro,noatime,nodiratime,data=ordered,barrier=1,nodiscard /dev/block/platform/msm_sdcc.1/by-name/system /system
+mount -t f2fs -o ro,noatime,nodiratime,background_gc=off,nodiscard /dev/block/platform/msm_sdcc.1/by-name/system /system
 
 if [ ! -f /system/priv-app/SystemUI/SystemUI.apk ] ; then
 	export ext4=0
 	umount -f /system
-	mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=1,data=ordered,nomblk_io_submit,errors=panic /dev/block/platform/msm_sdcc.1/by-name/userdata /arter97/data
-	mount -t f2fs -o noatime,nodiratime,background_gc=on,discard,nosuid,nodev /dev/block/platform/msm_sdcc.1/by-name/userdata /arter97/data
+	mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=1,data=ordered,nodiscard,nomblk_io_submit,errors=panic /dev/block/platform/msm_sdcc.1/by-name/userdata /arter97/data
+	mount -t f2fs -o noatime,nodiratime,background_gc=on,nodiscard,nosuid,nodev /dev/block/platform/msm_sdcc.1/by-name/userdata /arter97/data
 	chmod 755 /arter97/data/arter97_secondrom/system
 	chmod 771 /arter97/data/arter97_secondrom/data
 	chmod 771 /arter97/data/arter97_secondrom/cache
@@ -31,14 +31,14 @@ if [ ! -f /system/priv-app/SystemUI/SystemUI.apk ] ; then
 	export PATH=$CUR_PATH
 else
 	rm -rf /arter97
-	mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=1,data=ordered,nomblk_io_submit,errors=panic /dev/block/platform/msm_sdcc.1/by-name/userdata /data || export ext4=0
-	mount -t f2fs -o noatime,nodiratime,background_gc=on,discard,nosuid,nodev /dev/block/platform/msm_sdcc.1/by-name/userdata /data
-	mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=1,data=ordered,nomblk_io_submit,errors=panic /dev/block/platform/msm_sdcc.1/by-name/cache /cache
-	mount -t f2fs -o noatime,nodiratime,background_gc=on,discard,nosuid,nodev /dev/block/platform/msm_sdcc.1/by-name/cache /cache
+	mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=1,data=ordered,nodiscard,nomblk_io_submit,errors=panic /dev/block/platform/msm_sdcc.1/by-name/userdata /data || export ext4=0
+	mount -t f2fs -o noatime,nodiratime,background_gc=on,nodiscard,nosuid,nodev /dev/block/platform/msm_sdcc.1/by-name/userdata /data
+	mount -t ext4 -o noatime,nodiratime,nosuid,nodev,barrier=1,data=ordered,nodiscard,nomblk_io_submit,errors=panic /dev/block/platform/msm_sdcc.1/by-name/cache /cache
+	mount -t f2fs -o noatime,nodiratime,background_gc=on,nodiscard,nosuid,nodev /dev/block/platform/msm_sdcc.1/by-name/cache /cache
 fi
 
 if [[ $ext4 == "1" ]]; then
-	sed -i -e 's/#EXT4/\/dev\/block\/platform\/msm_sdcc.1\/by-name\/userdata     \/data           ext4    noatime,nosuid,nodev,barrier=1,data=ordered,nomblk_io_submit,errors=panic    wait,check,encryptable=\/dev\/block\/platform\/msm_sdcc.1\/by-name\/metadata/g' /fstab.flo
+	sed -i -e 's/#EXT4/\/dev\/block\/platform\/msm_sdcc.1\/by-name\/userdata     \/data           ext4    noatime,nosuid,nodev,barrier=1,data=ordered,nodiscard,nomblk_io_submit,errors=panic    wait,check,encryptable=\/dev\/block\/platform\/msm_sdcc.1\/by-name\/metadata/g' /fstab.flo
 	umount -f /data
 fi
 
