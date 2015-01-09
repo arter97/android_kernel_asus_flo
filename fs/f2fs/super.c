@@ -1226,6 +1226,8 @@ static int __init init_f2fs_fs(void)
 {
 	int err;
 
+	f2fs_build_trace_ios();
+
 	err = init_inodecache();
 	if (err)
 		goto fail;
@@ -1235,12 +1237,9 @@ static int __init init_f2fs_fs(void)
 	err = create_segment_manager_caches();
 	if (err)
 		goto free_node_manager_caches;
-	err = create_gc_caches();
-	if (err)
-		goto free_segment_manager_caches;
 	err = create_checkpoint_caches();
 	if (err)
-		goto free_gc_caches;
+		goto free_segment_manager_caches;
 	f2fs_kset = kset_create_and_add("f2fs", NULL, fs_kobj);
 	if (!f2fs_kset) {
 		err = -ENOMEM;
@@ -1257,8 +1256,6 @@ free_kset:
 	kset_unregister(f2fs_kset);
 free_checkpoint_caches:
 	destroy_checkpoint_caches();
-free_gc_caches:
-	destroy_gc_caches();
 free_segment_manager_caches:
 	destroy_segment_manager_caches();
 free_node_manager_caches:
@@ -1275,11 +1272,11 @@ static void __exit exit_f2fs_fs(void)
 	f2fs_destroy_root_stats();
 	unregister_filesystem(&f2fs_fs_type);
 	destroy_checkpoint_caches();
-	destroy_gc_caches();
 	destroy_segment_manager_caches();
 	destroy_node_manager_caches();
 	destroy_inodecache();
 	kset_unregister(f2fs_kset);
+	f2fs_destroy_trace_ios();
 }
 
 module_init(init_f2fs_fs)
