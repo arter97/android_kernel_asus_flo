@@ -15,6 +15,7 @@ lib/hw/gralloc.default.so
 lib/hw/gralloc.msm8960.so
 lib/hw/hwcomposer.msm8960.so
 lib/hw/memtrack.msm8960.so
+lib/hw/power.flo.so
 lib/libexternal.so
 lib/libmemalloc.so
 lib/libmemtrack.so
