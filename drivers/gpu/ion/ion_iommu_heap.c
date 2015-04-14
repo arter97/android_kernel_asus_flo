@@ -46,7 +46,7 @@ struct ion_iommu_priv_data {
 	unsigned long size;
 };
 
-static const unsigned int orders[] = {0};
+static const unsigned int orders[] = {8, 4, 0};
 static const int num_orders = ARRAY_SIZE(orders);
 
 struct page_info {
