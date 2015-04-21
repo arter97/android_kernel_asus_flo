@@ -1,7 +1,7 @@
 #!/sbin/sh
 # 
 # /system/addon.d/97-kernel.sh
-# During a CM11 upgrade, this script prevents kernel writings and backs up stock graphics libraries,
+# During a ROM upgrade, this script prevents kernel writings and backs up stock graphics libraries,
 # /system is formatted and reinstalled, then the file is restored.
 #
 
@@ -11,6 +11,9 @@ rm /dev/block/mmcblk0p14
 
 list_files() {
 cat <<EOF
+etc/wifi/WCNSS_qcom_cfg.ini
+etc/wifi/WCNSS_qcom_wlan_nv_deb.bin
+etc/wifi/WCNSS_qcom_wlan_nv_flo.bin
 lib/hw/gralloc.default.so
 lib/hw/gralloc.msm8960.so
 lib/hw/hwcomposer.msm8960.so
@@ -22,6 +25,7 @@ lib/libmemtrack.so
 lib/liboverlay.so
 lib/libqdutils.so
 lib/libqservice.so
+vendor/firmware/wlan/prima/WCNSS_cfg.dat
 EOF
 }
 
