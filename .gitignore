@@ -46,11 +46,10 @@ modules.builtin
 /Module.symvers
 /*.img
 /*.zip
-/kernelzip_aosp/*.img
-/kernelzip_cm/*.img
-!/kernelzip_aosp/system/lib/hw/*.so
-!/kernelzip_cm/system/lib/*.so
-!/kernelzip_cm/system/lib/hw/*.so
+/kernelzip/*.img
+!/kernelzip/system/lib/*.so
+!/kernelzip/system/lib/hw/*.so
+!/kernelzip/system/etc/wifi/*.bin
 /recoveryzip/*.img
 
 #

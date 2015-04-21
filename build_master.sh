@@ -9,8 +9,8 @@ fi
 
 if [ -e aosp.img ] ; then
 	rm arter97-kernel-aosp-"$(cat version)".zip 2>/dev/null
-	cp aosp.img kernelzip_aosp/boot.img
-	cd kernelzip_aosp/
+	cp aosp.img kernelzip/boot.img
+	cd kernelzip/
 	7z a -mx9 arter97-kernel-aosp-"$(cat ../version)"-tmp.zip *
 	zipalign -v 4 arter97-kernel-aosp-"$(cat ../version)"-tmp.zip ../arter97-kernel-aosp-"$(cat ../version)".zip
 	rm arter97-kernel-aosp-"$(cat ../version)"-tmp.zip
@@ -20,8 +20,8 @@ fi
 
 if [ -e cm.img ] ; then
 	rm arter97-kernel-cm-"$(cat version)".zip 2>/dev/null
-	cp cm.img kernelzip_cm/boot.img
-	cd kernelzip_cm/
+	cp cm.img kernelzip/boot.img
+	cd kernelzip/
 	7z a -mx9 arter97-kernel-cm-"$(cat ../version)"-tmp.zip *
 	zipalign -v 4 arter97-kernel-cm-"$(cat ../version)"-tmp.zip ../arter97-kernel-cm-"$(cat ../version)".zip
 	rm arter97-kernel-cm-"$(cat ../version)"-tmp.zip
