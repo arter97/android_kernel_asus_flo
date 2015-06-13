@@ -193,7 +193,8 @@ static int simple_governor(struct kgsl_device *device, int idle_stat)
 				val = 1; /* above min, lower it */
 				/* reset laziness count */
 				laziness = default_laziness;
-		} else if (pwr->active_pwrlevel == (pwr->num_pwrlevels - 1))
+			}
+		else if (pwr->active_pwrlevel == (pwr->num_pwrlevels - 1))
 			val = 0; /* already @ min, so do nothing */
 	}
 	return val;
@@ -236,6 +237,10 @@ static void tz_idle(struct kgsl_device *device, struct kgsl_pwrscale *pwrscale)
 		val = __secure_tz_entry2(TZ_UPDATE_ID, idle, device->id);
 	} else {
 		if (pwr->step_mul > 1)
+			val = __secure_tz_entry3(TZ_UPDATE_ID,
+				(pwr->active_pwrlevel + 1)/2,
+				priv->bin.total_time, priv->bin.busy_time);
+		else
 #ifdef CONFIG_MSM_KGSL_SIMPLE_GOV
 			{
 			idle = priv->bin.total_time - priv->bin.busy_time;
@@ -244,18 +249,14 @@ static void tz_idle(struct kgsl_device *device, struct kgsl_pwrscale *pwrscale)
 				val = simple_governor(device, idle);
 			else
 				val = __secure_tz_entry3(TZ_UPDATE_ID,
-				(pwr->active_pwrlevel + 1)/2,
+				pwr->active_pwrlevel,
 				priv->bin.total_time, priv->bin.busy_time);
 			}
 #else
 			val = __secure_tz_entry3(TZ_UPDATE_ID,
-				(pwr->active_pwrlevel + 1)/2,
-				priv->bin.total_time, priv->bin.busy_time);
-#endif
-		else
-			val = __secure_tz_entry3(TZ_UPDATE_ID,
 				pwr->active_pwrlevel,
 				priv->bin.total_time, priv->bin.busy_time);
+#endif
 	}
 
 	priv->bin.total_time = 0;
