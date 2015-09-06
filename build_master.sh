@@ -31,6 +31,7 @@ fi
 
 if [ -e recovery.img ] ; then
 	rm arter97-recovery-"$(cat version)"-philz_touch_"$(cat version_recovery | awk '{print $1}')".zip 2>/dev/null
+	cp kernelzip/META-INF/com/google/android/update-binary recoveryzip/META-INF/com/google/android/update-binary
 	cp recovery.img recoveryzip/
 	cd recoveryzip/
 	sed -i -e s/PHILZ_VERSION/$(cat ../version_recovery | awk '{print $1}')/g -e s/CWM_VERSION/$(cat ../version_recovery | awk '{print $2 }')/g META-INF/com/google/android/updater-script
@@ -40,4 +41,6 @@ if [ -e recovery.img ] ; then
 	sed -i -e s/$(cat ../version_recovery | awk '{print $1}')/PHILZ_VERSION/g -e s/$(cat ../version_recovery | awk '{print $2 }')/CWM_VERSION/g META-INF/com/google/android/updater-script
 	cd ..
 	ls -al arter97-recovery-"$(cat version)"-philz_touch_"$(cat version_recovery | awk '{print $1}')".zip
+	fakeroot tar -H ustar -c recovery.img > arter97-recovery-"$(cat version)"-philz_touch_"$(cat version_recovery | awk '{print $1}')".tar
+	rm recovery/recovery.img recoveryzip/META-INF/com/google/android/update-binary
 fi

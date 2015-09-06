@@ -46,6 +46,7 @@ modules.builtin
 /Module.symvers
 /*.img
 /*.zip
+/*.tar
 /kernelzip/*.img
 !/kernelzip/system/lib/*.so
 !/kernelzip/system/lib/hw/*.so
