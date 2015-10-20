@@ -13,3 +13,11 @@ dalvik.vm.dex2oat-Xmx=512m
 dalvik.vm.image-dex2oat-Xms=64m
 dalvik.vm.image-dex2oat-Xmx=64m
 ro.dalvik.vm.native.bridge=0
+debug.atrace.tags.enableflags=0
+#
+# BOOTIMAGE_BUILD_PROPERTIES
+#
+ro.bootimage.build.date=Wed Sep 16 01:35:19 UTC 2015
+ro.bootimage.build.date.utc=1442367319
+ro.bootimage.build.fingerprint=google/razor/flo:6.0/MRA58K/2256973:user/release-keys
+
