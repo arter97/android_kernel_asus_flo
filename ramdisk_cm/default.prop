@@ -6,10 +6,17 @@ ro.secure=0
 ro.allow.mock.location=0
 ro.debuggable=1
 ro.zygote=zygote32
-dalvik.vm.dex2oat-Xms=64m
-dalvik.vm.dex2oat-Xmx=512m
 dalvik.vm.image-dex2oat-Xms=64m
 dalvik.vm.image-dex2oat-Xmx=64m
+dalvik.vm.dex2oat-Xms=64m
+dalvik.vm.dex2oat-Xmx=512m
 ro.dalvik.vm.native.bridge=0
+debug.atrace.tags.enableflags=0
 persist.sys.usb.config=mtp,adb
 androidboot.selinux=0
+#
+# BOOTIMAGE_BUILD_PROPERTIES
+#
+ro.bootimage.build.date=Thu Nov 19 00:07:46 KST 2015
+ro.bootimage.build.date.utc=1447859266
+ro.bootimage.build.fingerprint=google/cm_flo/flo:6.0/MDB08M/9567c1f4d3:user/test-keys
