@@ -21,20 +21,20 @@
 void f2fs_set_inode_flags(struct inode *inode)
 {
 	unsigned int flags = F2FS_I(inode)->i_flags;
-	unsigned int new_fl = 0;
+
+	inode->i_flags &= ~(S_SYNC | S_APPEND | S_IMMUTABLE |
+			S_NOATIME | S_DIRSYNC);
 
 	if (flags & FS_SYNC_FL)
-		new_fl |= S_SYNC;
+		inode->i_flags |= S_SYNC;
 	if (flags & FS_APPEND_FL)
-		new_fl |= S_APPEND;
+		inode->i_flags |= S_APPEND;
 	if (flags & FS_IMMUTABLE_FL)
-		new_fl |= S_IMMUTABLE;
+		inode->i_flags |= S_IMMUTABLE;
 	if (flags & FS_NOATIME_FL)
-		new_fl |= S_NOATIME;
+		inode->i_flags |= S_NOATIME;
 	if (flags & FS_DIRSYNC_FL)
-		new_fl |= S_DIRSYNC;
-	set_mask_bits(&inode->i_flags,
-		S_SYNC|S_APPEND|S_IMMUTABLE|S_NOATIME|S_DIRSYNC, new_fl);
+		inode->i_flags |= S_DIRSYNC;
 }
 
 static void __get_inode_rdev(struct inode *inode, struct f2fs_inode *ri)
@@ -296,16 +296,12 @@ int f2fs_write_inode(struct inode *inode, struct writeback_control *wbc)
 		return 0;
 
 	/*
-	 * We need to lock here to prevent from producing dirty node pages
+	 * We need to balance fs here to prevent from producing dirty node pages
 	 * during the urgent cleaning time when runing out of free sections.
 	 */
-	f2fs_lock_op(sbi);
 	update_inode_page(inode);
-	f2fs_unlock_op(sbi);
 
-	if (wbc)
-		f2fs_balance_fs(sbi);
-
+	f2fs_balance_fs(sbi);
 	return 0;
 }
 
